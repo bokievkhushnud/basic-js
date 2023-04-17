@@ -21,12 +21,15 @@ function transform(array) {
   for (let index =0; index < arr.length; index++){
       console.log(arr)
       console.log(index)
-    //   console.log(arr[index])
       if (typeof arr[index]==='string'){
         if (arr[index]==='--discard-next'){
           if (index===arr.length-1){
             return arr.slice(0,index)
           }
+          if (typeof arr[index+2]==='string'){
+            arr.splice(index+1,1)
+      }
+          
           arr.splice(index,2)
           --index
 

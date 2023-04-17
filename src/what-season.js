@@ -16,9 +16,14 @@ function getSeason(date) {
     return "Unable to determine the time of year!";
   }
 
-  if (!(date instanceof Date) || isNaN(date.getTime())) {
-    throw new Error("Invalid date!");
-  }
+  try{
+    if (!(date instanceof Date) || isNaN(date.getTime())) {
+      throw new Error("Invalid date!");
+    }}catch {
+           throw new Error("Invalid date!");
+  
+    }
+  
 
   const month = date.getMonth();
 
