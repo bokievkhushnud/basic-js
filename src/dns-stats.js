@@ -22,10 +22,36 @@ const { NotImplementedError } = require('../extensions/index.js');
  * }
  *
  */
-function getDNSStats(/* domains */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function getDNSStats(domains) {
+  // Initialize the result object to store DNS appearance counts
+  const dnsStats = {};
+
+  // Loop through each domain in the input array
+  for (const domain of domains) {
+    // Split the domain into subdomains (in reverse order)
+    const subdomains = domain.split('.').reverse();
+
+    // Initialize an empty string to build the DNS chain
+    let dnsChain = '';
+
+    // Loop through each subdomain in the reversed subdomains array
+    for (const subdomain of subdomains) {
+      // Append the current subdomain to the DNS chain
+      dnsChain += '.' + subdomain;
+      // If the DNS chain is not already in the result object, add it with an initial count of 1
+      // Otherwise, increment the count for the existing DNS chain
+      if (!dnsStats.hasOwnProperty(dnsChain)) {
+        dnsStats[dnsChain] = 1;
+      } else {
+        dnsStats[dnsChain]++;
+      }
+    }
+  }
+
+  // Return the result object containing DNS appearance counts
+  return dnsStats;
 }
+
 
 module.exports = {
   getDNSStats

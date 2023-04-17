@@ -23,10 +23,48 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function minesweeper(matrix) {
+  // Get the dimensions of the input matrix
+  const rows = matrix.length;
+  const cols = matrix[0].length;
+
+  // Initialize an empty result matrix with the same dimensions as the input matrix
+  const result = Array.from({ length: rows }, () => Array(cols).fill(0));
+
+  // Define a helper function to check if a cell is within bounds
+  const isInBounds = (row, col) => row >= 0 && row < rows && col >= 0 && col < cols;
+
+  // Define the possible neighboring cell offsets
+  const offsets = [
+    [-1, -1], [-1, 0], [-1, 1],
+    [0, -1],           [0, 1],
+    [1, -1], [1, 0], [1, 1]
+  ];
+
+  // Loop through each cell in the input matrix
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      // If the current cell contains a mine
+      if (matrix[row][col]) {
+        // Loop through each neighboring cell offset
+        for (const [rowOffset, colOffset] of offsets) {
+          // Calculate the neighboring cell position
+          const newRow = row + rowOffset;
+          const newCol = col + colOffset;
+
+          // If the neighboring cell is within bounds, increment its count in the result matrix
+          if (isInBounds(newRow, newCol)) {
+            result[newRow][newCol]++;
+          }
+        }
+      }
+    }
+  }
+
+  // Return the result matrix
+  return result;
 }
+
 
 module.exports = {
   minesweeper
